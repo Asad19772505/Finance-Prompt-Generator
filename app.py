@@ -2,7 +2,7 @@ import streamlit as st
 import io
 
 # Title
-st.title("\U0001F4B8 Finance Prompt Generator")
+st.title("💸 Finance Prompt Generator")
 st.markdown("Select a finance category and sub-topic to get a reusable AI prompt.")
 
 # Prompt library structure
@@ -49,20 +49,26 @@ prompt_library = {
     }
 }
 
-# Sidebar selection
+# User selections
 category = st.selectbox("Select Finance Domain", list(prompt_library.keys()))
 sub_topic = st.selectbox("Select Sub-topic", list(prompt_library[category].keys()))
 selected_prompt = prompt_library[category][sub_topic]
 
-# Display prompt
-st.subheader("\U0001F4AC Generated Prompt")
+# Display the prompt
+st.subheader("💬 Generated Prompt")
 st.code(selected_prompt, language="text")
 
-# Download button
-buffer = io.StringIO()
-buffer.write(selected_prompt)
+# Enable download as .txt file
+buffer = io.BytesIO()
+buffer.write(selected_prompt.encode('utf-8'))
 buffer.seek(0)
-st.download_button(label="\U0001F4E5 Download Prompt as .txt", data=buffer, file_name="finance_prompt.txt", mime="text/plain")
 
-# Info
+st.download_button(
+    label="📥 Download Prompt as .txt",
+    data=buffer,
+    file_name="finance_prompt.txt",
+    mime="text/plain"
+)
+
+# User guidance
 st.info("Use this prompt in ChatGPT, GROQ, or any AI assistant for finance insights.")
